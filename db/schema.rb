@@ -32,7 +32,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_190222) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_ingredients_on_name", unique: true
   end
 
   create_table "recipe_ingredients", force: :cascade do |t|
@@ -44,7 +43,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_190222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
-    t.index ["recipe_id", "ingredient_id"], name: "index_recipe_ingredients_on_recipe_id_and_ingredient_id", unique: true
     t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
   end
 
@@ -55,8 +53,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_190222) do
     t.float "ratings"
     t.string "image"
     t.bigint "author_id"
-    t.bigint "category_id", null: false
-    t.bigint "cuisine_id", null: false
+    t.bigint "category_id"
+    t.bigint "cuisine_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_recipes_on_author_id"
