@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <%= image_tag(get_recipe_image(@recipe), class: "card-img-top", alt: @recipe.title, onerror: "this.onerror=null;this.src='#{asset_path('default-recipe.png')}';") %>
+    </div>
+
+    <div class="col-md-8">
+      <h1><%= @recipe.title %></h1>
+      <p class="text-muted">
+        <strong>By:</strong> <%= @recipe.author&.name || "Unknown" %><br>
+        <strong>Category:</strong> <%= @recipe.category&.name || "N/A" %><br>
+        <strong>Cuisine:</strong> <%= @recipe.cuisine&.name || "N/A" %><br>
+        <strong>Rating:</strong> <%= @recipe.ratings %> ⭐
+      </p>
+
+      <p>
+        <strong>Prep Time:</strong> <%= @recipe.prep_time %> minutes<br>
+        <strong>Cook Time:</strong> <%= @recipe.cook_time %> minutes
+      </p>
+    </div>
+  </div>
+
+  <hr class="my-4">
+
+  <h3>Ingredients</h3>
+  <ul class="list-group list-group-flush mb-4">
+    <% @recipe.recipe_ingredients.each do |ri| %>
+      <li class="list-group-item">
+        <%= ri.quantity_text.presence || ri.quantity || "" %>
+        <%= ri.unit %>
+        <%= ri.ingredient.name %>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= link_to "← Back to Search", search_recipes_path, class: "btn btn-outline-secondary" %>
+</div>

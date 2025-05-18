@@ -23,7 +23,11 @@ def parse_quantity(quantity_text)
     end
   end
 
-  return total > 0 ? total : nil
+  total > 0 ? total : nil
+end
+
+def image_decode(image_url)
+  CGI.unescape(image_url).split('url=')[1]
 end
 
 
@@ -44,14 +48,14 @@ recipes.each_with_index do |data, index|
     prep_time: data['prep_time'],
     ratings: data['ratings'],
     author: author,
-    image: data['image'],
+    image: image_decode(data['image']),
     category: category,
     cuisine: cuisine
   )
 
   data['ingredients'].each do |ingredient_line|
     match = ingredient_line.match(/^([\d\s\/½⅓⅔¼¾⅛⅜⅝⅞\.-]+)?\s*([a-zA-Z]+)?\s+(.*)$/)
-    
+
     if match.present?
       quantity_text = match[1]&.strip
       unit          = match[2]&.strip

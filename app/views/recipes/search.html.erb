@@ -1,0 +1,11 @@
+<h1>Search Recipes</h1>
+
+<%= form_with url: search_recipes_path, method: :get, data: { turbo_frame: "results" }, local: true do %>
+  <%= label_tag :ingredients, "Enter ingredients (comma separated):" %><br>
+  <%= text_field_tag :ingredients, params[:ingredients], placeholder: "e.g. flour, sugar" %>
+  <%= submit_tag "Search" %>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <%= render partial: "recipes/results", locals: { recipes: @recipes || [] } %>
+<% end %>
