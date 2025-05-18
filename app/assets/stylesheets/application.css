@@ -8,3 +8,22 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+ .recipe-card {
+  max-width: 332px;
+}
+.recipe-card .card-img-top {
+  max-height: 219px;
+}
+.pagination-wrapper ul{
+  justify-content: center !important;
+}
+.content-center-align {
+  justify-content: center;
+}
+.recipe-search-form .form-label{
+  float: left;
+}
+.pagination-wrapper .page-selection {
+  float: left;
+}

@@ -1,11 +1,54 @@
-<h1>Search Recipes</h1>
+<h1 class='display-4 text-center'>Search Recipes</h1>
 
-<%= form_with url: search_recipes_path, method: :get, data: { turbo_frame: "results" }, local: true do %>
-  <%= label_tag :ingredients, "Enter ingredients (comma separated):" %><br>
-  <%= text_field_tag :ingredients, params[:ingredients], placeholder: "e.g. flour, sugar" %>
-  <%= submit_tag "Search" %>
-<% end %>
+<%= form_with url: search_recipes_path, method: :get, data: { turbo_frame: "results" }, local: true, class: "row g-2 content-center-align mb-4 recipe-search-form" do %>
+  <div class="col-sm-3">
+    <%= label_tag :include_ingredients, "Ingredients you have", class: "form-label" %>
+    <%= text_field_tag :include_ingredients, params[:include_ingredients], class: "form-control", placeholder: "e.g. flour, sugar" %>
+  </div>
+  <div class="col-sm-3">
+    <%= label_tag :exclude_ingredients, "Ingredients you don't have", class: "form-label" %>
+    <%= text_field_tag :exclude_ingredients, params[:exclude_ingredients], class: "form-control", placeholder: "e.g. flour, sugar" %>
+  </div>
+  <div class="col-auto mt-4">
+    <%= submit_tag "Search", class: "btn btn-primary mt-3" %>
+  </div>
 
-<%= turbo_frame_tag "results" do %>
-  <%= render partial: "recipes/results", locals: { recipes: @recipes || [] } %>
+  <a href='#' class="mt-5 col-sm-2" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
+    Advance filters
+  </a>
+
+  <div class="collapse" id="filterCollapse">
+    <div class="card card-body">
+      <div class="row">
+        <div class="col-md-4">
+          <%= label_tag :recipe_title, "Search by Recipe name" %>
+          <%= text_field_tag :recipe_title, params[:recipe_title], class: "form-control" %>
+        </div>
+
+        <div class="col-md-2">
+          <%= label_tag :prep_time, "Max Prep Time (mins)" %>
+          <%= number_field_tag :prep_time, params[:prep_time], class: "form-control", min: 0 %>
+        </div>
+
+        <div class="col-md-2">
+          <%= label_tag :cook_time, "Max Cook Time (mins)" %>
+          <%= number_field_tag :cook_time, params[:cook_time], class: "form-control", min: 0 %>
+        </div>
+
+        <div class="col-md-2">
+          <%= label_tag :ratings, "Min Ratings" %>
+          <%= number_field_tag :ratings, params[:ratings], class: "form-control", step: 0.1, min: 0, max: 5 %>
+        </div>
+
+        <div class="col-2 mt-4">
+          <%= submit_tag "Apply Filters", class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <%= turbo_frame_tag "results" do %>
+    <%= render partial: "recipes/results", locals: { recipes: @recipes || [] } %>
+  <% end %>
 <% end %>
