@@ -1,21 +1,26 @@
-<h1 class='display-4 text-center'>Search Recipes</h1>
+<h1 class='display-4 text-center mb-5'>Search Recipes</h1>
 
-<%= form_with url: search_recipes_path, method: :get, data: { turbo_frame: "results" }, local: true, class: "row g-2 content-center-align mb-4 recipe-search-form" do %>
-  <div class="col-sm-3">
-    <%= label_tag :include_ingredients, "Ingredients you have", class: "form-label" %>
-    <%= text_field_tag :include_ingredients, params[:include_ingredients], class: "form-control", placeholder: "e.g. flour, sugar" %>
-  </div>
-  <div class="col-sm-3">
-    <%= label_tag :exclude_ingredients, "Ingredients you don't have", class: "form-label" %>
-    <%= text_field_tag :exclude_ingredients, params[:exclude_ingredients], class: "form-control", placeholder: "e.g. flour, sugar" %>
-  </div>
-  <div class="col-auto mt-4">
-    <%= submit_tag "Search", class: "btn btn-primary mt-3" %>
-  </div>
+<%= form_with url: recipes_path, method: :get, data: { turbo_frame: "results" }, local: true, class: "g-2 content-center-align mb-4 recipe-search-form" do %>
+  
+  <div class='mb-4 row col-sm-12'>
+    <div class="col-sm-3">
+      <%= label_tag :included_ingredients, "Ingredients you have", class: "form-label" %>
+      <%= text_field_tag :included_ingredients, params[:included_ingredients], class: "form-control tom-select", multiple: true, data: { controller: "multi-select" } %>
+    </div>
 
-  <a href='#' class="mt-5 col-sm-2" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
-    Advance filters
-  </a>
+    <div class="col-sm-3">
+      <%= label_tag :excluded_ingredients, "Ingredients you don't have", class: "form-label" %>
+      <%= text_field_tag :excluded_ingredients, params[:excluded_ingredients], class: "form-control tom-select", multiple: true, data: { controller: "multi-select" } %>
+    </div>
+
+    <div class="col-auto mt-3">
+      <%= submit_tag "Search", class: "btn btn-primary mt-3" %>
+    </div>
+
+    <a href='#' class="mt-5 col-sm-2" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
+      Advance filters
+    </a>
+  </div>
 
   <div class="collapse" id="filterCollapse">
     <div class="card card-body">

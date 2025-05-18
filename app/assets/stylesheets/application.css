@@ -8,7 +8,6 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
-
  .recipe-card {
   max-width: 332px;
 }
@@ -26,4 +25,34 @@
 }
 .pagination-wrapper .page-selection {
   float: left;
+}
+.tom-select {
+  .ts-control {
+    @extend .form-control;
+    min-height: auto;
+    padding: 0.375rem 0.75rem;
+  }
+
+  .ts-dropdown {
+    @extend .dropdown-menu;
+    border: 1px solid #ced4da;
+    padding: 0;
+  }
+
+  .ts-dropdown .ts-option {
+    @extend .dropdown-item;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f8f9fa;
+    }
+  }
+
+  .item {
+    @extend .badge;
+    @extend .bg-primary;
+    padding: 0.4em 0.6em;
+    margin: 0.2em;
+    font-size: 90%;
+  }
 }

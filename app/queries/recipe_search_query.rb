@@ -10,34 +10,30 @@ class RecipeSearchQuery
     @search_params.each do |filter_name, term|
       @recipes = send("#{filter_name}_filter", term) if term.present?
     end
-    page_filter(@page_number, @per_page)
+    paginate(@page_number, @per_page)
   end
 
   private
 
-  def include_ingredients_filter(include_ingredients)
+  def included_ingredients_filter(included_ingredients)
     @recipes.joins(:ingredients)
-            .where("ingredients.name ILIKE ANY (array[?])", include_ingredients)
+            .where("ingredients.name ILIKE ANY (array[?])", convert_to_array(included_ingredients))
             .distinct
   end
 
-  def exclude_ingredients_filter(exclude_ingredients)
+  def excluded_ingredients_filter(excluded_ingredients)
     @recipes.where.not(id: Recipe.joins(:ingredients)
-            .where("ingredients.name ILIKE ANY (array[?])", exclude_ingredients))
+            .where("ingredients.name ILIKE ANY (array[?])", convert_to_array(excluded_ingredients)))
             .distinct
   end
 
-  def page_filter(page_number, per_page)
+  def paginate(page_number, per_page)
     @recipes.page(page_number).per(per_page || 10)
   end
 
-  # def have_ingredients
-  #   @search_params[:ingredients].split(",").map(&:strip)
-  # end
-
-  # def does_not_have_ingredients
-  #   @search_params[:have_ingredients].split(",").map(&:strip)
-  # end
+  def convert_to_array(ingredient_list)
+    ingredient_list.split(",").map(&:strip)
+  end
 
   def recipe_title_filter(title_query)
     @recipes.where("recipes.title ILIKE ?", "%#{title_query}%")
