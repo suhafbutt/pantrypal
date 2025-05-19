@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_15_190222) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_19_175715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,6 +32,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_190222) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_ingredients_on_name"
   end
 
   create_table "recipe_ingredients", force: :cascade do |t|
@@ -59,7 +60,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_190222) do
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_recipes_on_author_id"
     t.index ["category_id"], name: "index_recipes_on_category_id"
+    t.index ["cook_time"], name: "index_recipes_on_cook_time"
     t.index ["cuisine_id"], name: "index_recipes_on_cuisine_id"
+    t.index ["prep_time"], name: "index_recipes_on_prep_time"
+    t.index ["ratings"], name: "index_recipes_on_ratings"
+    t.index ["title"], name: "index_recipes_on_title"
   end
 
   create_table "users", force: :cascade do |t|
