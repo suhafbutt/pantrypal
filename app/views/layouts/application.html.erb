@@ -27,6 +27,13 @@
 
   <body>
     <section class='mt-5 pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto'>
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+      
       <%= yield %>
     </section
   </body>

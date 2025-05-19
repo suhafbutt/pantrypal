@@ -10,7 +10,7 @@ class RecipeSearchQuery
     @search_params.each do |filter_name, term|
       @recipes = send("#{filter_name}_filter", term) if term.present?
     end
-    paginate(@page_number, @per_page)
+    paginate(@page_number, @per_page).distinct
   end
 
   private
@@ -18,13 +18,10 @@ class RecipeSearchQuery
   def included_ingredients_filter(included_ingredients)
     @recipes.joins(:ingredients)
             .where("ingredients.name ILIKE ANY (array[?])", convert_to_array(included_ingredients))
-            .distinct
   end
 
   def excluded_ingredients_filter(excluded_ingredients)
-    @recipes.where.not(id: Recipe.joins(:ingredients)
-            .where("ingredients.name ILIKE ANY (array[?])", convert_to_array(excluded_ingredients)))
-            .distinct
+    @recipes.where.not(id: included_ingredients_filter(excluded_ingredients))
   end
 
   def paginate(page_number, per_page)

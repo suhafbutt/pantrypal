@@ -19,29 +19,33 @@ RSpec.describe "Recipe index", type: :feature do
     expect(page).to have_content("Advance filters")
   end
 
-  scenario "user searches for a recipe by title" do
-    fill_in "recipe_title", with: "Banana"
-    click_button "Search"
-    expect(page).to have_content("Banana Bread")
-    expect(page).not_to have_content("Pancakes")
-  end
+  scenario "user searches for unavailable ingredients", js: true do
+    find("input#excluded_ingredients-ts-control").send_keys("fl")
 
-  scenario "user filters by Ingredients you have" do
-    fill_in "included_ingredients", with: "egg"
+    within(".ts-dropdown") do
+      expect(page).to have_selector(".option", text: "flour")
+    end
+
+    find(".ts-dropdown .option", text: /^flour$/i).click
     click_button "Search"
     expect(page).to have_content("Pancakes")
     expect(page).not_to have_content("Banana Bread")
   end
 
-  scenario "user filters by Ingredients you don't have" do
-    fill_in "excluded_ingredients", with: "egg"
+  scenario "user searches for available ingredients", js: true do
+    find("input#included_ingredients-ts-control").send_keys("fl")
+    within(".ts-dropdown") do
+      expect(page).to have_selector(".option", text: "flour")
+    end
+
+    find(".ts-dropdown .option", text: /^flour$/i).click
     click_button "Search"
     expect(page).to have_content("Banana Bread")
     expect(page).not_to have_content("Pancakes")
   end
 
-  scenario "user filters by Ingredients you don't have" do
-    fill_in "excluded_ingredients", with: "egg"
+  scenario "user searches for a recipe by title" do
+    fill_in "recipe_title", with: "Banana"
     click_button "Search"
     expect(page).to have_content("Banana Bread")
     expect(page).not_to have_content("Pancakes")

@@ -5,13 +5,11 @@ class RecipesController < ApplicationController
     @recipes = RecipeSearchQuery.new(search_params: permit_search_params,
                                       page_number: params[:page],
                                       per_page: params[:per_page]).filter
-    respond_to do |format|
-      format.html
-      format.turbo_stream
-    end
   end
 
   def show
+    return redirect_to recipes_path, alert: "Recipe not found" unless @recipe.present?
+
     @recipe_ingredients = @recipe.recipe_ingredients.includes(:ingredient)
   end
 
@@ -23,7 +21,5 @@ class RecipesController < ApplicationController
 
   def set_recipe
     @recipe = Recipe.find_by(id: params[:id])
-
-    redirect_to recipes_path, alert: "Recipe not found" unless @recipe.present?
   end
 end

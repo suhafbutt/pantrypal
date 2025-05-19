@@ -24,10 +24,12 @@ RSpec.describe "Recipe show", type: :feature do
     expect(page).not_to have_content("egg")
   end
 
-  scenario "User clicks on a specific recipe link and navigates to the recipe page" do
+  scenario "User navigates back to the recipes page" do
     click_link "← Back to recipes"
     expect(current_path).to eq(recipes_path)
     expect(page).to have_content("Pancakes")
     expect(page).to have_selector('img[src="https://example.com/pancakes_image.jpg"]')
+    expect(page).to have_content("Banana Bread")
+    expect(page).to have_selector('img[src="https://example.com/banana_bread_image.jpg"]')
   end
 end

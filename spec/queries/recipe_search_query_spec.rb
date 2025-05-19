@@ -4,8 +4,6 @@ RSpec.describe RecipeSearchQuery, type: :service do
   let!(:ingredient1) { create(:ingredient, name: "salt") }
   let!(:ingredient2) { create(:ingredient, name: "sugar") }
   let!(:ingredient3) { create(:ingredient, name: "flour") }
-  # let!(:recipe) { create(:recipe, title: "Bread", ingredients: [create(:ingredient, name: "flour")]) }
-
 
   let!(:recipe1) { create(:recipe, title: "Salted Bread", prep_time: 10, cook_time: 20, ratings: 4.5, ingredients: [ ingredient1 ]) }
   let!(:recipe2) { create(:recipe, title: "Sweet Cake", prep_time: 15, cook_time: 30, ratings: 4.8, ingredients: [ ingredient2 ]) }
