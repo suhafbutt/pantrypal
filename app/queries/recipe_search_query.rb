@@ -21,7 +21,8 @@ class RecipeSearchQuery
   end
 
   def excluded_ingredients_filter(excluded_ingredients)
-    @recipes.where.not(id: included_ingredients_filter(excluded_ingredients))
+    @recipes.where.not(id: Recipe.joins(:ingredients)
+            .where("ingredients.name ILIKE ANY (array[?])", convert_to_array(excluded_ingredients)))
   end
 
   def paginate(page_number, per_page)
