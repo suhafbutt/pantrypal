@@ -81,7 +81,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: <%= ENV["DATABASE_URL"] %>
+    url: <%= ENV['DATABASE_URL'] %>
     username: <%= ENV["PANTRYPAL_DATABASE_USERNAME"] %>
     password: <%= ENV["PANTRYPAL_DATABASE_PASSWORD"] %>
   cache:
