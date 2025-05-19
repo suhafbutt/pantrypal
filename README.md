@@ -1,6 +1,9 @@
 # 🍳 PantryPal - Smart Recipe Finder
 
-**PantryPal** is a Ruby on Rails web application that helps users find relevant recipes based on the ingredients they already have at home. Users can search for recipes by including or excluding ingredients, and further refine results using filters like prep time, cook time, and ratings.
+**PantryPal** is a Ruby on Rails web application that helps users find relevant recipes based on the ingredients they already have at home. Users can search for recipes by including or excluding ingredients, and further refine results using filters like prep time, cook time, and ratings. 
+
+## 🔗 The website
+[PantryPal](https://new-pantrypal-35788da1f8a7.herokuapp.com/recipes)
 
 ---
 
