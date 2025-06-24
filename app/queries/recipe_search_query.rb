@@ -16,8 +16,11 @@ class RecipeSearchQuery
   private
 
   def included_ingredients_filter(included_ingredients)
+    ingredient_names = convert_to_array(included_ingredients)
     @recipes.joins(:ingredients)
-            .where("ingredients.name ILIKE ANY (array[?])", convert_to_array(included_ingredients))
+            .where("ingredients.name ILIKE ANY (array[?])", ingredient_names)
+            .group('recipes.id')
+            .having('COUNT(DISTINCT ingredients.id) = ?', ingredient_names.size)
   end
 
   def excluded_ingredients_filter(excluded_ingredients)
